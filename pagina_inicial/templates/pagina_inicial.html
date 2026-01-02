@@ -1,0 +1,402 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnecTerra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #6FD666 0%, #4DB8A8 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .logo-highlight {
+            background-color: white;
+            color: #6FD666;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #2C3E50;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #2C3E50;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: white;
+            border-radius: 1.5rem;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .hero-text {
+            flex: 1;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #3498DB;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .hero-globe {
+            flex-shrink: 0;
+        }
+
+        .hero-globe img {
+            width: 350px;
+            height: 350px;
+            object-fit: contain;
+        }
+
+        /* Cards Section */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #2C3E50;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2C3E50;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #6FD666 0%, #4DB8A8 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(111, 214, 102, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(111, 214, 102, 0.4);
+            background: linear-gradient(135deg, #5BC55C 0%, #3DA89A 100%);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                font-size: 2rem;
+            }
+
+            .hero-globe img {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 2rem;
+            }
+
+            .hero-text {
+                font-size: 1.5rem;
+            }
+
+            .hero-globe img {
+                width: 220px;
+                height: 220px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #2C3E50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                Connec<span class="logo-highlight">Terra</span>
+            </div>
+            <nav>
+                <a href="#sobre">Sobre a Plataforma</a>
+                <a href="#contatos">Nossos Contatos</a>
+                <span class="copyright">© LOREM IPSUM LTDA</span>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    Sustentabilidade como
+                </div>
+                <div class="hero-globe">
+                    <img src="{% static 'images/logo-ct.png' %}" alt="Logo do globo da ConnecTerra">
+                </div>
+                <div class="hero-text">
+                    Pilar da Conexão Real
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards Section -->
+        <section class="cards-container">
+            <!-- Card 1: Produtor Cadastrado -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="{% static 'images/produtor.png' %}" alt="Produtor cadastrado acessando o site">
+                </div>
+                <h3 class="card-title">Já sou produtor</h3>
+                <p class="card-subtitle">Cadastrado</p>
+                <button class="btn" onclick="handleProdutorLogin()">Acessar</button>
+            </div>
+
+            <!-- Card 2: Buscar Produtores -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="{% static 'images/lupa.png' %}" alt="Lupa para buscar produtores certificados">
+                </div>
+                <h3 class="card-title">Estou procurando</h3>
+                <p class="card-subtitle">Produtores Certificados</p>
+                <button class="btn" onclick="handleBuscarProdutores()">Buscar</button>
+            </div>
+
+            <!-- Card 3: Cadastrar -->
+            <div class="card">
+                <div class="card-icon">
+                    <img src="{% static 'images/broto.png' %}" alt="Broto de planta simbolizando o cadastro de novos produtores">
+                </div>
+                <h3 class="card-title">Quero me cadastrar</h3>
+                <p class="card-subtitle"></p>
+                <button class="btn" onclick="handleCadastro()">Cadastrar</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Função para mostrar notificação toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Handler para login de produtor
+        function handleProdutorLogin() {
+            showToast('Redirecionando para login de produtor...');
+            // Aqui você pode adicionar o redirecionamento
+            // window.location.href = '/login-produtor';
+            console.log('Login de Produtor clicado');
+        }
+
+        // Handler para buscar produtores
+        function handleBuscarProdutores() {
+            showToast('Abrindo busca de produtores certificados...');
+            // Aqui você pode adicionar o redirecionamento
+            // window.location.href = '/buscar-produtores';
+            console.log('Buscar Produtores clicado');
+        }
+
+        // Handler para cadastro
+        function handleCadastro() {
+            showToast('Redirecionando para cadastro...');
+            // Aqui você pode adicionar o redirecionamento
+            // window.location.href = '/cadastro';
+            console.log('Cadastro clicado');
+        }
+
+        // Adicionar efeito de parallax suave no scroll (opcional)
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Animação de entrada dos cards
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 150);
+            });
+        });
+    </script>
+</body>
+</html>

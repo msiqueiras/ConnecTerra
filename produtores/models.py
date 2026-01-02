@@ -16,7 +16,7 @@ class ProdutoresRurais(models.Model):
         )
 
     certificate_upload = models.FileField(
-        upload_to='certificados/',
+        upload_to='produtores/',
         blank=True,
         null=True,
         verbose_name='Cópia do(s) Certificado(s)'

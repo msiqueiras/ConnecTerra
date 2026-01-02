@@ -7,7 +7,7 @@ O ConnecTerra é um projeto integrador do programa **Bolsa Futuro Digital** do G
 Carinhosamente chamado de CT, o projeto visa ser uma plataforma de facilitação de certificações dos chamados "selos verdes", que são certificados de práticas de produções rurais sustentáveis. Com essa plataforma, os produtores de pequeno e médio porte conseguem se informar mais sobre os certificados e serem listados e reconhecidos como produtores rurais oficialmente ceritificados, assim podendo se conectar com consumidores conscientes e preocupados com a origem sustentável do produto. 
 
 ## Status atual e informações técnicas
-Em desenvolvimento, atualmente está no processo de Sprint 2 com modelagem de formulários e front end do projeto.
+Em desenvolvimento, atualmente está no processo de Sprint 3 com modelagem de formulários e front end do projeto.
 
 Ferramentas utilizadas:
 - Python

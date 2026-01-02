@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render #shortcuts = atalhos
 
 def pagina_inicial(request):
-    return HttpResponse("Página inicial")
+    return render(request, 'pagina_inicial.html')
