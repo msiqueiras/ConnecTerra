@@ -5,7 +5,5 @@ venv/
 .venv/
 .pytest_cache/
 .mypy_cache/
-.vscode/ # Configurações de usuário do VS Code
+.vscode/
 db.sqlite3
-.png
-.jpeg

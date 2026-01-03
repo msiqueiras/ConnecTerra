@@ -1,0 +1,351 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre a Plataforma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #6FD666 0%, #4DB8A8 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .logo-highlight {
+            background-color: white;
+            color: #6FD666;
+            padding: 0.35rem 1.25rem;
+            border-radius: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 2rem;
+            font-weight: 400;
+            color: white;
+            margin-left: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 90px;
+            height: 90px;
+            flex-shrink: 0;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Info Cards Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background-color: white;
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #5BC55C;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .card-description {
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: #2C3E50;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-icon-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+
+        .card-icon {
+            width: 180px;
+            height: 180px;
+        }
+
+        .card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* CTA Section in Card 3 */
+        .cta-section {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid #E8F5E9;
+        }
+
+        .cta-text {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #3B9DD9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-link {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #3B9DD9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-link:hover {
+            color: #2980B9;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-card:last-child {
+                grid-column: 1 / -1;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            .main-card {
+                padding: 2rem 1.5rem;
+                border-radius: 1.5rem;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-left {
+                flex-direction: column;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .logo-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                min-height: auto;
+            }
+
+            .card-title {
+                font-size: 1.25rem;
+            }
+
+            .card-description {
+                font-size: 0.95rem;
+            }
+
+            .thumbnail {
+                width: 80px;
+                height: 60px;
+            }
+
+            .nav-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .info-card:nth-child(1) { animation-delay: 0.1s; }
+        .info-card:nth-child(2) { animation-delay: 0.2s; }
+        .info-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-card">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="logo">
+                        Connec<span class="logo-highlight">Terra</span><span class="page-subtitle"> - Sobre a plataforma</span>
+                    </h1>
+                </div>
+            </header>
+
+            <!-- Info Cards Grid -->
+            <section class="info-grid">
+                <!-- Card 1: O que é a ConnecTerra -->
+                <article class="info-card">
+                    <h2 class="card-title">O que é a ConnecTerra?</h2>
+                    <p class="card-description">
+                        A ConnecTerra, carinhosamente chamada de CT, é uma plataforma de validação de Selos Verdes e listagem de pequenos e médios produtores certificados.
+                    </p>
+                    <div class="card-icon-wrapper">
+                        <div class="card-icon">
+                            <img src="{% static 'images/pictogram_fazendeiro-sf.png' %}" alt="O que é ConnecTerra" width = '1000' height="700">
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: O que são selos verdes -->
+                <article class="info-card">
+                    <h2 class="card-title">O que são selos verdes?</h2>
+                    <p class="card-description">
+                        Também chamados de certificações verdes ou ecosselos, são certificações de produtos, serviços ou empresas que buscam minimizar impactos ambientais e utilizam práticas socialmente responsáveis.
+                    </p>
+                    <div class="card-icon-wrapper">
+                        <div class="card-icon">
+                            <img src="{% static 'images/ecosselo.png' %}" alt="Selos Verdes">
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3: Qual o objetivo da CT -->
+                <article class="info-card">
+                    <h2 class="card-title">Qual o objetivo da CT?</h2>
+                    <p class="card-description">
+                        A CT possui critérios rígidos para a validação dos produtores, objetivando a criação de uma rede de produtores com boas práticas e os catalogando para que consumidores ou outros produtores da região possam formar uma rede de contato, parcerias e serviços.
+                    </p>
+                    <div class="card-icon-wrapper">
+                        <div class="card-icon">
+                            <img src="{% static 'images/rede.png' %}" alt="Objetivo da CT">
+                        </div>
+                    </div>
+                    <div class="cta-section">
+                        <a href="{% url 'pagina_inicial' %}" class="cta-link">
+                            Pronto para fortalecer essa rede? 
+                        </a>
+                    </div>
+                </article>
+            </section>
+
+
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.info-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
