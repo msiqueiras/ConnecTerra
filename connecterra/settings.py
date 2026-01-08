@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-px@)o2%v!_pqz$k3=yqin#(#)y5x@9x-x^ij73019ctdkpyf1&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['connecterra.fly.dev']
 
 
 # Application definition
