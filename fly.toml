@@ -1,13 +1,13 @@
-# fly.toml app configuration file generated for connecterra
+# fly.toml app configuration file generated for connecterra on 2026-01-08T19:48:33Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = 'connecterra'
 primary_region = 'iad'
 console_command = '/code/manage.py shell'
 
 [build]
-
-[deploy]
-  release_command = 'python manage.py migrate --noinput'
 
 [env]
   PORT = '8000'
@@ -25,11 +25,6 @@ console_command = '/code/manage.py shell'
   cpu_kind = 'shared'
   cpus = 1
   memory_mb = 1024
-
-# Volume persistente para o banco SQLite
-[mounts]
-  source = "connecterra_data"
-  destination = "/data"
 
 [[statics]]
   guest_path = '/code/static'
