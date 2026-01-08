@@ -4,10 +4,6 @@ Django==4.2.7
 # Servidor WSGI
 gunicorn==21.2.0
 
-# Banco de dados (escolha um)
-# psycopg2-binary==2.9.9  # PostgreSQL
-mysqlclient==2.2.0    # MySQL (descomente se usar)
-
 # Configuração
 python-decouple==3.8
 
