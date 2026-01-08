@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-px@)o2%v!_pqz$k3=yqin#(#)y5x@9x-x^ij73019ctdkpyf1&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['connecterra.fly.dev']
+
 
 
 # Application definition
@@ -113,6 +114,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+CSRF_TRUSTED_ORIGINS = ['https://connecterra.fly.dev']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
