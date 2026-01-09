@@ -7,5 +7,3 @@ venv/
 .mypy_cache/
 .vscode/ # Configurações de usuário do VS Code
 db.sqlite3
-.png
-.jpeg
