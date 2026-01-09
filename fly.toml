@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for connecterra on 2026-01-08T19:48:33Z
+# fly.toml app configuration file generated for connecterra on 2026-01-09T20:27:45Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'connecterra'
-primary_region = 'iad'
+primary_region = 'gru'
 console_command = '/code/manage.py shell'
 
 [build]
@@ -13,7 +13,7 @@ console_command = '/code/manage.py shell'
   PORT = '8000'
 
 [http_service]
-  internal_port = 8000
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
@@ -29,10 +29,3 @@ console_command = '/code/manage.py shell'
 [[statics]]
   guest_path = '/code/static'
   url_prefix = '/static/'
-
-[deploy]
-  release_command = 'python manage.py migrate --noinput && python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@example.com', 'admin123')"'
-
-[mounts]
-  source = "connecterra_data"
-  destination = "/data"
