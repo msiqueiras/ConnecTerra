@@ -1,5 +1,13 @@
+<<<<<<< HEAD
+=======
+# fly.toml app configuration file generated for connecterra on 2026-01-09T20:27:45Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+>>>>>>> a5f09ec9dccd8d30ede7dc9fd7f96ea484b1e011
 app = 'connecterra'
-primary_region = 'iad'
+primary_region = 'gru'
 console_command = '/code/manage.py shell'
 
 [build]
@@ -24,6 +32,7 @@ console_command = '/code/manage.py shell'
 [[statics]]
   guest_path = '/code/static'
   url_prefix = '/static/'
+<<<<<<< HEAD
 
 [deploy]
   release_command = 'python manage.py migrate --noinput && python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username=\"admin\").exists() or User.objects.create_superuser(\"admin\", \"admin@example.com\", \"admin123\")"'
@@ -34,3 +43,5 @@ console_command = '/code/manage.py shell'
 
 [processes]
   app = "gunicorn seu_projeto.wsgi:application --bind 0.0.0.0:8080"
+=======
+>>>>>>> a5f09ec9dccd8d30ede7dc9fd7f96ea484b1e011
