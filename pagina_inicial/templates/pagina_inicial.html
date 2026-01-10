@@ -278,8 +278,8 @@
                 Connec<span class="logo-highlight">Terra</span>
             </div>
             <nav>
-                <a href="#sobre">Sobre a Plataforma</a>
-                <a href="#contatos">Nossos Contatos</a>
+                <a href="sobre/">Sobre a Plataforma</a>
+                <a href="nossoscontatos/">Nossos Contatos</a>
                 <span class="copyright">© LOREM IPSUM LTDA</span>
             </nav>
         </header>
@@ -337,42 +337,6 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // Função para mostrar notificação toast
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Handler para login de produtor
-        function handleProdutorLogin() {
-            showToast('Redirecionando para login de produtor...');
-            // Aqui você pode adicionar o redirecionamento
-            // window.location.href = '/login-produtor';
-            console.log('Login de Produtor clicado');
-        }
-
-        // Handler para buscar produtores
-        function handleBuscarProdutores() {
-            showToast('Abrindo busca de produtores certificados...');
-            // Aqui você pode adicionar o redirecionamento
-            // window.location.href = '/buscar-produtores';
-            console.log('Buscar Produtores clicado');
-        }
-
-        // Handler para cadastro
-        function handleCadastro() {
-            showToast('Redirecionando para cadastro...');
-            // Aqui você pode adicionar o redirecionamento
-            // window.location.href = '/cadastro';
-            console.log('Cadastro clicado');
-        }
-
-        // Adicionar efeito de parallax suave no scroll (opcional)
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const hero = document.querySelector('.hero');
@@ -381,7 +345,6 @@
             }
         });
 
-        // Animação de entrada dos cards
         window.addEventListener('load', () => {
             const cards = document.querySelectorAll('.card');
             cards.forEach((card, index) => {
