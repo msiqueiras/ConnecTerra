@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from produtores.models import ProdutoresRurais
 
 def produtoresrurais(request):
-    return HttpResponse('oi')
+    produtores = ProdutoresRurais.objects.all()
+
+    return render(request,'catalago_produtores.html',{'produtores': produtores})
