@@ -157,8 +157,18 @@
                 <input type="tel" id="phone_number" name="phone_number" class="form-input" required maxlength="15">
             </div>
 
+            <div class="form-group">
+                <label for="password" class="form-label">Senha<span class="required">*</span></label>
+                <input type="password" name="password" id="password" class="form-input" required minlength="8">
+            </div>
+
+            <div class="form-group">
+                <label for="confirmar_senha" class="form-label">Confirmar Senha<span class="required">*</span></label>
+                <input type="password" name="confirmar_senha" id="confirmar_senha" class="form-input" required minlength="8">
+            </div>
+
             <div class="illustration-section">
-                <img src="{% static 'images/fazendeiro-cadastro-sf.png' %}" width="350" alt="Fazendeiro">
+                <img src="{% static 'images/fazendeiro-cadastro-sf.png' %}" width="350" alt="Fazendeiro fazendo o cadastro">
                 <div class="submit-section">
                     <button type="submit" class="submit-button">Finalizar Cadastro</button>
                 </div>
@@ -171,7 +181,6 @@
     </div>
 
     <script>
-        // CEP Auto-preenchimento (Corrigido para os novos IDs)
         document.getElementById('cep').addEventListener('blur', function() {
             const cep = this.value.replace(/\D/g, '');
             if (cep.length === 8) {
@@ -187,7 +196,7 @@
             }
         });
 
-        // Máscaras (Simplificadas)
+        
         const mask = (id, fn) => {
             document.getElementById(id).addEventListener('input', e => e.target.value = fn(e.target.value));
         };

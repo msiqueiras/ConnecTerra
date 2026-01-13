@@ -127,3 +127,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+LOGIN_URL = 'login_produtor'
+LOGIN_REDIRECT_URL = 'dashboard_produtor'

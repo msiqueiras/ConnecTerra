@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard - ConnecTerra</title></head>
+<div style="background: white; padding: 30px; border-radius: 20px; display: inline-block;">
+    <h1>Bem-vindo, {{ nome }}!</h1>
+    <p>Seu perfil foi criado com sucesso.</p>
+    <p><strong>Cidade:</strong> {{ cidade }} - {{ estado }}</p>
+    <p><strong>E-mail:</strong> {{ email }}</p>
+    <hr>
+    <a href="{% url 'pagina_inicial' %}" style="text-decoration: none; color: #4DB8A8; font-weight: bold;">Voltar para Home</a> | 
+</div>
+</html>

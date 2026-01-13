@@ -1,6 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class ProdutoresRurais(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     id = models.AutoField(primary_key=True)
     full_name = models.CharField(max_length=300, verbose_name='Nome completo do responsável')
     employment_name = models.CharField(max_length=300, verbose_name='Nome da empresa', blank=True, null=True, default='Pessoa Física')
@@ -8,6 +10,7 @@ class ProdutoresRurais(models.Model):
     cpf = models.CharField(max_length=20, unique=True, verbose_name = 'CPF')
     cnpj = models.CharField(max_length=20, unique=True, blank=True, null=True, verbose_name='CNPJ')
     email_adress = models.EmailField(unique=True, verbose_name='Endereço Eletrônico')
+    password = models.CharField(max_length=128)
     adress = models.CharField(verbose_name='Logradouro com número')
     cep = models.CharField(max_length=8, verbose_name='CEP')
     city = models.CharField(max_length=100, verbose_name='Município', default='Não informado')

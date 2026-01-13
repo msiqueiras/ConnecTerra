@@ -1,38 +1,115 @@
 from django.shortcuts import render, redirect
 from produtores.models import ProdutoresRurais
 from produtores.forms import ProdutorForm
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth.decorators import login_required 
+
+def pagina_inicial(request):
+    return render(request, 'pagina_inicial.html')
 
 def produtoresrurais(request):
     produtores = ProdutoresRurais.objects.all().order_by('full_name')
-    #parametros de pesquisa
     search = request.GET.get('search')
     if search == None:
         search = ''
     produtores = ProdutoresRurais.objects.filter(city__icontains=search)
     
-
     return render(request,'catalago_produtores.html',{'produtores': produtores})
 
 def cadastro(request):
     if request.method == 'POST':
+        email = request.POST.get('email_adress')
+        senha = request.POST.get('password')
+        confirmar_senha = request.POST.get('confirmar_senha')
+        cpf = request.POST.get('cpf')
+        nome_completo = request.POST.get('full_name')
+        
+        if senha != confirmar_senha:
+            messages.error(request, 'As senhas não coincidem!')
+            return render(request, 'cadastro.html')
+        
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Este email já está cadastrado!')
+            return render(request, 'cadastro.html')
+        
+        if ProdutoresRurais.objects.filter(cpf=cpf).exists():
+            messages.error(request, 'Este CPF já está cadastrado!')
+            return render(request, 'cadastro.html')
+        
+        user = User.objects.create(
+            username=email, 
+            email=email,
+            first_name=nome_completo.split()[0] if nome_completo else '',
+            last_name=' '.join(nome_completo.split()[1:]) if len(nome_completo.split()) > 1 else ''
+        )
+        user.set_password(senha)
+        user.save()
+        
         def limpa(campo):
             valor = request.POST.get(campo)
             return valor if valor and valor.strip() else None
 
-        ProdutoresRurais.objects.create(
-            full_name=request.POST.get('full_name'),
-            cpf=request.POST.get('cpf'),
+        produtor = ProdutoresRurais.objects.create(
+            user=user, 
+            full_name=nome_completo,
+            cpf=cpf,
             cep=request.POST.get('cep'),
             adress=request.POST.get('adress'),
             city=request.POST.get('city'),
             state=request.POST.get('state'),
-            email_adress=request.POST.get('email_adress'),
+            email_adress=email,
             phone_number=request.POST.get('phone_number'),
-            # Aqui está o segredo: se estiver vazio, vira None (NULL no banco)
             employment_name=limpa('employment_name'),
             costume_name=limpa('costume_name'),
             cnpj=limpa('cnpj'),
         )
-        return redirect('pagina_inicial')
+        
+        messages.success(request, 'Cadastro realizado com sucesso! Faça login para continuar.')
+        return redirect('login_produtor')
     
     return render(request, 'cadastro.html')
+
+
+
+def login_produtor(request):
+    # if request.user.is_authenticated:
+    #     return redirect('dashboard_produtor')
+    
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+        user = authenticate(request, username=email, password=senha)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, f'Bem-vindo, {user.first_name}!')
+            return redirect('dashboard_produtor')
+        else:
+            messages.error(request, 'Email ou senha incorretos!')
+    
+    return render(request, 'login.html')
+
+
+# def logout_produtor(request):
+#     logout(request)
+#     messages.success(request, 'Você saiu com sucesso!')
+#     return redirect('login_produtor')
+
+
+@login_required(login_url='login_produtor')
+def dashboard_produtor(request):
+    try:
+        produtor = ProdutoresRurais.objects.get(user=request.user)
+    except:
+        produtor = ProdutoresRurais.objects.last() 
+
+    context = {
+        'nome': produtor.full_name,
+        'email': produtor.email_adress,
+        'cidade': produtor.city,
+        'estado': produtor.state,
+    }
+    return render(request, 'dashboard.html', context)
