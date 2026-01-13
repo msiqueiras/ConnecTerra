@@ -3,6 +3,10 @@
         <title> Catálogo de Produtores </title>
     </head>  
     {% block content %}
+    <form method='GET' action="{% url 'produtores' %}">
+        <input type="text" name="search" placeholder='Buscar por município...'>
+        <button type='submit'>Buscar</button>
+    </form>
         <body>
             <h1> Catálogo de Produtores</h1>
             {% for produtor in produtores %}
