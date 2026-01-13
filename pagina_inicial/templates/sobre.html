@@ -208,10 +208,15 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1 class="logo">
-                <span>Connec<span class="logo-highlight">Terra</span></span>
-                <span class="page-title">Sobre a plataforma</span>
-            </h1>
+            <div class="header-left">
+                <h1 class="logo">
+                    Connec<span class="logo-highlight">Terra</span>
+                </h1>
+                <span class="page-title">Sobre a Plataforma</span>
+            </div>
+            <a href="{% url 'pagina_inicial' %}">
+                <img src="{% static 'images/logo-ct-sf.png' %}" width='70' height='70' alt = 'Logo ConnecTerra'>
+            </a>
         </header>
 
         <!-- Cards Grid -->
