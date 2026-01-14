@@ -100,16 +100,35 @@ def dashboard_produtor(request):
         return redirect('login_produtor')
     
     if request.method == 'POST':
+        
+        novo_cnpj = request.POST.get('cnpj', '').strip()
+        novo_telefone = request.POST.get('telefone', '').strip()
+        
+        if not produtor.cnpj:
+            if novo_cnpj:
+                if ProdutoresRurais.objects.filter(cnpj=novo_cnpj).exists():
+                    messages.error(request, 'Este CNPJ já está cadastrado por outro produtor')
+                    return redirect('dashboard_produtor')
+                produtor.cnpj = novo_cnpj
+            elif not novo_cnpj:
+                produtor.cnpj= None
+
+        if novo_telefone != produtor.phone_number:
+            if ProdutoresRurais.objects.filter(phone_number=novo_telefone).exists():
+                messages.error(request, 'Este número de telefone já está cadastrado por outro produtor')
+                return redirect('dashboard_produtor')
+            produtor.phone_number = novo_telefone
+        
+        #as infos pessoais q podem ser alteradas
         produtor.cep = request.POST.get('cep')
         produtor.adress = request.POST.get('logradouro')
         produtor.city = request.POST.get('cidade')
         produtor.state = request.POST.get('estado')
-        produtor.phone_number = request.POST.get('telefone')
         
+        #adição de infos de empresas
         produtor.employment_name = request.POST.get('nome_empresa', '')
         produtor.costume_name = request.POST.get('nome_fantasia', '')
-        produtor.cnpj = request.POST.get('cnpj', '')
-        
+
         produtor.save()
         
         messages.success(request, 'Informações atualizadas com sucesso!')
