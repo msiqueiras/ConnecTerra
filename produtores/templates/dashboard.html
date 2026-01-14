@@ -1,12 +1,749 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head><title>Dashboard - ConnecTerra</title></head>
-<div style="background: white; padding: 30px; border-radius: 20px; display: inline-block;">
-    <h1>Bem-vindo, {{ nome }}!</h1>
-    <p>Seu perfil foi criado com sucesso.</p>
-    <p><strong>Cidade:</strong> {{ cidade }} - {{ estado }}</p>
-    <p><strong>E-mail:</strong> {{ email }}</p>
-    <hr>
-    <a href="{% url 'pagina_inicial' %}" style="text-decoration: none; color: #4DB8A8; font-weight: bold;">Voltar para Home</a> | 
-</div>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnecTerra - Dashboard do Produtor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(180deg, #6FD666 0%, #4DB8A8 100%);
+        min-height: 100vh;
+        padding: 2rem 1rem;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -1px;
+    }
+
+    .logo-highlight {
+        background-color: white;
+        color: #6FD666;
+        padding: 0.25rem 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .welcome-text {
+        font-size: 2rem;
+        font-weight: 300;
+        color: white;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .logout-btn {
+        background-color: #E74C3C;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .logo-ct {
+        width: 80px;
+        height: 80px;
+        background-color: white;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.7rem;
+        color: #2C3E50;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    /* Dashboard Container */
+    .dashboard-container {
+        background-color: white;
+        border-radius: 2rem;
+        padding: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+    }
+
+    /* Form Groups */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-label {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #2C3E50;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .form-input {
+        padding: 1rem 1.5rem;
+        border: 2px solid #E0E0E0;
+        border-radius: 2rem;
+        font-size: 1rem;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.3s ease;
+        outline: none;
+        background-color: white;
+    }
+
+    .form-input:focus {
+        border-color: #6FD666;
+        box-shadow: 0 0 0 3px rgba(111, 214, 102, 0.1);
+    }
+
+    .form-input:disabled {
+        background-color: #F5F5F5;
+        color: #999;
+        cursor: not-allowed;
+    }
+
+    .info-button {
+        display: inline-block;
+        padding: 0.5rem 1.2rem;
+        background-color: #F5F5F5;
+        border: 2px solid #E0E0E0;
+        border-radius: 2rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #2C3E50;
+        text-transform: uppercase;
+        cursor: help;
+        transition: all 0.3s ease;
+        margin-top: 0.3rem;
+        align-self: flex-start;
+    }
+
+    .info-button:hover {
+        background-color: #6FD666;
+        color: white;
+        border-color: #6FD666;
+    }
+
+    /* Certificate Section */
+    .certificate-section {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .certificate-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .certificate-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #2C3E50;
+        text-transform: uppercase;
+    }
+
+    .add-cert-btn {
+        background-color: #6FD666;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem;
+        border: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .add-cert-btn:hover {
+        background-color: #5BC55C;
+        transform: translateY(-2px);
+    }
+
+    .certificates-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .certificate-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background-color: #F5F5F5;
+        border-radius: 1.5rem;
+        border: 2px solid #E0E0E0;
+    }
+
+    .certificate-icon {
+        width: 40px;
+        height: 40px;
+        background-color: #6FD666;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .certificate-info {
+        flex-grow: 1;
+    }
+
+    .certificate-name {
+        font-weight: 700;
+        color: #2C3E50;
+        font-size: 1rem;
+    }
+
+    .certificate-date {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 2rem;
+        color: #999;
+        font-style: italic;
+    }
+
+    /* Illustration Section */
+    .illustration-section {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+    }
+
+    .illustration {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 6rem;
+    }
+
+    .submit-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .submit-button {
+        background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 1.25rem 4rem;
+        border: none;
+        border-radius: 3rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+        letter-spacing: 1px;
+    }
+
+    .submit-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(33, 150, 243, 0.4);
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #5BC55C;
+        padding: 1.5rem;
+        text-align: center;
+        border-radius: 1rem;
+        margin-top: 3rem;
+    }
+
+    .footer-text {
+        color: #2C3E50;
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 2rem;
+        padding: 2.5rem;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2C3E50;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .modal-btn {
+        flex: 1;
+        padding: 1rem;
+        border-radius: 2rem;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .modal-btn.cancel {
+        background-color: #E0E0E0;
+        color: #2C3E50;
+    }
+
+    .modal-btn.confirm {
+        background-color: #6FD666;
+        color: white;
+    }
+
+    .modal-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Success Message */
+    .success-message {
+        background-color: #4CAF50;
+        color: white;
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 600;
+        display: none;
+    }
+
+    .success-message.show {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .dashboard-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 1rem 0.5rem;
+        }
+
+        .header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .header-left {
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+        }
+
+        .welcome-text {
+            font-size: 1.5rem;
+        }
+
+        .dashboard-container {
+            padding: 1.5rem;
+            gap: 1.5rem;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem 2rem;
+        }
+    }
+
+</style>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="logo">
+                    Connec<span class="logo-highlight">Terra</span>
+                </h1>
+                <span class="welcome-text">
+                    Bem-vindo ao seu perfil, <strong>{{ produtor.full_name }}</strong>!
+                </span>
+            </div>
+            <div class="header-right">
+                <a href="{% url 'pagina_inicial' %}"><img src="{% static 'images/logo-ct-sf.png' %}" width="70" height="70"></a>
+            </div>
+        </header>
+
+        <!-- Success/Error Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="success-message show">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Dashboard Form -->
+        <form method="POST" class="dashboard-container" id="dashboardForm">
+            {% csrf_token %}
+            
+            <!-- Nome Completo (NÃO EDITÁVEL) -->
+            <div class="form-group">
+                <label for="nome_completo" class="form-label">
+                    Nome Completo do Responsável
+                </label>
+                <input 
+                    type="text" 
+                    id="nome_completo" 
+                    name="nome_completo" 
+                    class="form-input" 
+                    value="{{ produtor.full_name }}"
+                    disabled
+                >
+            </div>
+
+            <!-- CEP (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="cep" class="form-label">CEP</label>
+                <input 
+                    type="text" 
+                    id="cep" 
+                    name="cep" 
+                    class="form-input" 
+                    placeholder="00000-000"
+                    maxlength="9"
+                    value="{{ produtor.cep }}"
+                >
+            </div>
+
+            <!-- CPF (NÃO EDITÁVEL) -->
+            <div class="form-group">
+                <label for="cpf" class="form-label">CPF</label>
+                <input 
+                    type="text" 
+                    id="cpf" 
+                    name="cpf" 
+                    class="form-input" 
+                    value="{{ produtor.cpf }}"
+                    disabled
+                >
+            </div>
+
+            <!-- Logradouro (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="logradouro" class="form-label">Logradouro com Número</label>
+                <input 
+                    type="text" 
+                    id="logradouro" 
+                    name="logradouro" 
+                    class="form-input" 
+                    placeholder="Rua Exemplo, 123"
+                    value="{{ produtor.adress }}"
+                >
+            </div>
+
+            <!-- Nome da Empresa (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="nome_empresa" class="form-label">Nome da Empresa</label>
+                <span class="info-button">Para quem quer se cadastrar como pessoa jurídica</span>
+                <input 
+                    type="text" 
+                    id="nome_empresa" 
+                    name="nome_empresa" 
+                    class="form-input"
+                    value="{{ produtor.employment_name|default:'' }}"
+                >
+            </div>
+
+            <!-- Cidade (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input 
+                    type="text" 
+                    id="cidade" 
+                    name="cidade" 
+                    class="form-input" 
+                    value="{{ produtor.city }}"
+                >
+            </div>
+
+            <!-- Nome Fantasia (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="nome_fantasia" class="form-label">Nome Fantasia da Empresa</label>
+                <span class="info-button">Para quem quer se cadastrar como pessoa jurídica</span>
+                <input 
+                    type="text" 
+                    id="nome_fantasia" 
+                    name="nome_fantasia" 
+                    class="form-input"
+                    value="{{ produtor.costume_name|default:'' }}"
+                >
+            </div>
+
+            <!-- Estado (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="estado" class="form-label">Estado</label>
+                <input 
+                    type="text" 
+                    id="estado" 
+                    name="estado" 
+                    class="form-input" 
+                    placeholder="Ex: SP"
+                    maxlength="2"
+                    value="{{ produtor.state }}"
+                >
+            </div>
+
+            <!-- CNPJ (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="cnpj" class="form-label">CNPJ</label>
+                <span class="info-button">Para quem quer se cadastrar como pessoa jurídica</span>
+                <input 
+                    type="text" 
+                    id="cnpj" 
+                    name="cnpj" 
+                    class="form-input" 
+                    placeholder="00.000.000/0000-00"
+                    maxlength="18"
+                    value="{{ produtor.cnpj|default:'' }}"
+                >
+            </div>
+
+            <!-- Email (NÃO EDITÁVEL) -->
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    value="{{ produtor.email_adress }}"
+                    disabled
+                >
+            </div>
+
+            <!-- Telefone (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="telefone" class="form-label">Número de Telefone (com DDD)</label>
+                <input 
+                    type="tel" 
+                    id="telefone" 
+                    name="telefone" 
+                    class="form-input" 
+                    placeholder="(00) 00000-0000"
+                    maxlength="15"
+                    value="{{ produtor.phone_number }}"
+                >
+            </div>
+
+            <!-- ... resto do formulário (certificações etc) ... -->
+
+            <!-- Botão Salvar -->
+            <div class="illustration-section">
+                <img src="{% static 'images/fazendeiro-prancheta-sf.png' %}" width="600" height="600" alt="Fazendeiro com uma prancheta na mão simbolizando a gestão dos dados"> 
+                <div class="submit-section">
+                    <button type="submit" class="submit-button">Salvar Informações</button>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">© Lorem Ipsum Ltda - 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Máscara para CEP
+        document.getElementById('cep').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 8) {
+                value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            }
+        });
+
+        // Máscara para Telefone
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/^(\d{2})(\d)/, '($1) $2');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            }
+        });
+
+        // Máscara para CNPJ
+        document.getElementById('cnpj').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 14) {
+                value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+                value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                e.target.value = value;
+            }
+        });
+
+        // Modal
+        function openModal() {
+            document.getElementById('certModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('certModal').classList.remove('active');
+            document.getElementById('cert_name').value = '';
+            document.getElementById('cert_file').value = '';
+        }
+
+        // Adicionar certificação
+        let certificates = [];
+
+        function addCertificate() {
+            const name = document.getElementById('cert_name').value;
+            const file = document.getElementById('cert_file').files[0];
+
+            if (!name || !file) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+
+            const cert = {
+                id: Date.now(),
+                name: name,
+                fileName: file.name,
+                date: new Date().toLocaleDateString('pt-BR')
+            };
+
+            certificates.push(cert);
+            renderCertificates();
+            closeModal();
+        }
+
+        function renderCertificates() {
+            const list = document.getElementById('certificatesList');
+            
+            if (certificates.length === 0) {
+                list.innerHTML = '<div class="empty-state">Nenhuma certificação adicionada ainda. Clique no botão acima para adicionar.</div>';
+                return;
+            }
+
+            list.innerHTML = certificates.map(cert => `
+                <div class="certificate-item">
+                    <div class="certificate-icon">✓</div>
+                    <div class="certificate-info">
+                        <div class="certificate-name">${cert.name}</div>
+                        <div class="certificate-date">Adicionado em ${cert.date} • ${cert.fileName}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('certModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
 </html>

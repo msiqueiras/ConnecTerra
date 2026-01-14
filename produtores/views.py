@@ -75,8 +75,6 @@ def cadastro(request):
 
 
 def login_produtor(request):
-    # if request.user.is_authenticated:
-    #     return redirect('dashboard_produtor')
     
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -93,23 +91,32 @@ def login_produtor(request):
     return render(request, 'login.html')
 
 
-# def logout_produtor(request):
-#     logout(request)
-#     messages.success(request, 'Você saiu com sucesso!')
-#     return redirect('login_produtor')
-
-
 @login_required(login_url='login_produtor')
 def dashboard_produtor(request):
     try:
-        produtor = ProdutoresRurais.objects.get(user=request.user)
-    except:
-        produtor = ProdutoresRurais.objects.last() 
-
+        produtor = request.user.produtoresrurais
+    except ProdutoresRurais.DoesNotExist:
+        messages.error(request, 'Produtor não encontrado!')
+        return redirect('login_produtor')
+    
+    if request.method == 'POST':
+        produtor.cep = request.POST.get('cep')
+        produtor.adress = request.POST.get('logradouro')
+        produtor.city = request.POST.get('cidade')
+        produtor.state = request.POST.get('estado')
+        produtor.phone_number = request.POST.get('telefone')
+        
+        produtor.employment_name = request.POST.get('nome_empresa', '')
+        produtor.costume_name = request.POST.get('nome_fantasia', '')
+        produtor.cnpj = request.POST.get('cnpj', '')
+        
+        produtor.save()
+        
+        messages.success(request, 'Informações atualizadas com sucesso!')
+        return redirect('dashboard_produtor')
+    
     context = {
-        'nome': produtor.full_name,
-        'email': produtor.email_adress,
-        'cidade': produtor.city,
-        'estado': produtor.state,
+        'produtor': produtor,
     }
+    
     return render(request, 'dashboard.html', context)
