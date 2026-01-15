@@ -331,7 +331,7 @@
 
 
         <section class="search-section">
-            <form method="GET" action="{% url 'produtores' %}" class="search-container">
+            <form method="GET" action="{% url 'catalogo' %}" class="search-container">
                 <span class="search-icon"></span>
                  <input 
                     type="text" 
@@ -342,7 +342,7 @@
                     value="{{ request.GET.search }}"
                 >
                 {% if request.GET.search %}
-                <a href="{% url 'produtores' %}" class="clear-icon" title="Limpar busca">✖</a>
+                <a href="{% url 'catalogo' %}" class="clear-icon" title="Limpar busca">✖</a>
                 {% else %}
                 <button type="submit" class="clear-icon" style="background: none; border: none; cursor: pointer;">🔍</button>
                {% endif %}
@@ -351,7 +351,7 @@
         
         <section class="produtores-list" id="produtoresList">
             
-            {% for produtor in produtores %}
+            {% for produtor in catalogo %}
             <div class="produtor-card" data-name="{{ produtor.nome|lower }}" data-location="{{ produtor.municipio }}, {{ produtor.estado }}" data-certificacoes="{{ produtor.certificacoes_list }}">
                 <div class="produtor-header">
                     <h3 class="produtor-name">{{ produtor.nome_lgpd }}</h3>

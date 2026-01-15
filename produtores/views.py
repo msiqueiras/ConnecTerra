@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 def pagina_inicial(request):
     return render(request, 'pagina_inicial.html')
 
-def produtoresrurais(request):
+def catalogo(request):
     search = request.GET.get('search', '').strip()
     
     if search:
@@ -18,7 +18,7 @@ def produtoresrurais(request):
     else:
         produtores = ProdutoresRurais.objects.all().order_by('full_name')
     
-    return render(request, 'catalogo_produtores.html', {'produtores': produtores})
+    return render(request, 'catalogo_produtores.html', {'catalogo': produtores})
 
 def cadastro(request):
     if request.method == 'POST':
