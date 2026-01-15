@@ -35,6 +35,13 @@ class ProdutoresRurais(models.Model):
         verbose_name='Selos Verdes'
         )
 
+    @property
+    def nome_lgpd(self):
+        nomes = self.full_name.split()
+        if len(nomes) > 1:
+            return f"{nomes[0]} {nomes[-1]}"
+        return self.full_name
+
     def __str__(self):
         return self.full_name
     

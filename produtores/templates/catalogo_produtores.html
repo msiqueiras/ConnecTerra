@@ -354,7 +354,7 @@
             {% for produtor in produtores %}
             <div class="produtor-card" data-name="{{ produtor.nome|lower }}" data-location="{{ produtor.municipio }}, {{ produtor.estado }}" data-certificacoes="{{ produtor.certificacoes_list }}">
                 <div class="produtor-header">
-                    <h3 class="produtor-name">{{ produtor.full_name }}</h3>
+                    <h3 class="produtor-name">{{ produtor.nome_lgpd }}</h3>
                     <div class="certificacoes">
                         {% for cert in produtor.certificacoes.all %}
                         <div class="certificacao-icon">

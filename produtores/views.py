@@ -11,13 +11,14 @@ def pagina_inicial(request):
     return render(request, 'pagina_inicial.html')
 
 def produtoresrurais(request):
-    produtores = ProdutoresRurais.objects.all().order_by('full_name')
-    search = request.GET.get('search')
-    if search == None:
-        search = ''
-    produtores = ProdutoresRurais.objects.filter(city__icontains=search)
+    search = request.GET.get('search', '').strip()
     
-    return render(request,'catalago_produtores.html',{'produtores': produtores})
+    if search:
+        produtores = ProdutoresRurais.objects.filter(city__icontains=search).order_by('full_name')
+    else:
+        produtores = ProdutoresRurais.objects.all().order_by('full_name')
+    
+    return render(request, 'catalogo_produtores.html', {'produtores': produtores})
 
 def cadastro(request):
     if request.method == 'POST':
@@ -53,7 +54,7 @@ def cadastro(request):
             valor = request.POST.get(campo)
             return valor if valor and valor.strip() else None
 
-        produtor = ProdutoresRurais.objects.create(
+        ProdutoresRurais.objects.create(
             user=user, 
             full_name=nome_completo,
             cpf=cpf,
