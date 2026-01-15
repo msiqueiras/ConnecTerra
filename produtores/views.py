@@ -26,6 +26,7 @@ def cadastro(request):
         confirmar_senha = request.POST.get('confirmar_senha')
         cpf = request.POST.get('cpf')
         nome_completo = request.POST.get('full_name')
+        logradouro = request.POST.get('adress')
         
         if senha != confirmar_senha:
             messages.error(request, 'As senhas não coincidem!')

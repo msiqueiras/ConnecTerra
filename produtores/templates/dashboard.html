@@ -482,7 +482,7 @@
         {% endif %}
 
         <!-- Dashboard Form -->
-        <form method="POST" class="dashboard-container" id="dashboardForm">
+        <form method="POST" class="dashboard-container" id="dashboardForm" enctype="multipart/form-data">
             {% csrf_token %}
             
             <!-- Nome Completo (NÃO EDITÁVEL) -->
@@ -523,7 +523,7 @@
                     name="cpf" 
                     class="form-input" 
                     value="{{ produtor.cpf }}"
-                    disabled
+                    readonly
                 >
             </div>
 
@@ -634,19 +634,44 @@
                 >
             </div>
 
-            <!-- ... resto do formulário (certificações etc) ... -->
+            
+            <!-- Certificações aqui -->
+            <section class="certificate-section">
+                <div class="certificate-header">
+                    <h2 class="certificate-title">Certificações e Selos</h2>
+                    <button type="button" class="add-cert-btn" onclick="openModal()">+ Adicionar Certificado</button>
+                </div>
 
-            <!-- Botão Salvar -->
+                <div class="certificates-list" id="certificatesList">
+                    <div class="empty-state"> Nenhuma certificação adicionada ainda. Clique no botão acima para adicionar</div>
+                </div>
+            </section>
+
             <div class="illustration-section">
-                <img src="{% static 'images/fazendeiro-prancheta-sf.png' %}" width="600" height="600" alt="Fazendeiro com uma prancheta na mão simbolizando a gestão dos dados"> 
+                <img src="{% static 'images/fazendeiro-prancheta-sf.png' %}" width="600" height="600" alt="Fazendeiro"> 
                 <div class="submit-section">
                     <button type="submit" class="submit-button">Salvar Informações</button>
                 </div>
             </div>
-
         </form>
+         <div class="modal" id="certModal">
+            <div class="modal-content">
+                <h3 class="modal-header">Adicionar Certificação</h3>
+                <div class="form-group">
+                    <label for="cert_name" class="form-label">Nome da Certificação</label>
+                    <input type="text" id="cert_name" class="form-input" placeholder="Ex: Certificação Orgânica">
+                </div>
+                <div class="form-group">
+                    <label for="cert_file" class="form-label">Arquivo PDF</label>
+                    <input type="file" id="cert_file" class="form-input" accept=".pdf">
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn cancel" onclick="closeModal()">Cancelar</button>
+                    <button type="button" class="modal-btn confirm" onclick="addCertificate()">Adicionar</button>
+                </div>
+            </div>
+        </div>
 
-        <!-- Footer -->
         <footer class="footer">
             <p class="footer-text">© Lorem Ipsum Ltda - 2026</p>
         </footer>
@@ -744,6 +769,7 @@
                 closeModal();
             }
         });
-    </script>
+        </script>
 </body>
+
 </html>
