@@ -34,6 +34,8 @@ class ProdutoresRurais(models.Model):
         blank=True,
         verbose_name='Selos Verdes'
         )
+    
+    summary_prod = models.TextField(max_length=500, verbose_name='Descrição breve do que é produzido', blank=True, null=True, default='Não descrito')
 
     @property
     def nome_lgpd(self):
