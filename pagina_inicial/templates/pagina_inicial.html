@@ -5,13 +5,23 @@
 <section class="bg-white rounded-5 p-4 p-md-5 mb-5 shadow-lg">
     <div class="row align-items-center text-center">
         <div class="col-lg-4">
-            <h1 class="display-5 fw-extrabold text-primary text-uppercase">Sustentabilidade como</h1>
+            <h1 class="hero-text text-uppercase">
+                Sustentabilidade como
+            </h1>
         </div>
+
         <div class="col-lg-4 my-4 my-lg-0">
-            <img src="{% static 'images/logo-ct.png' %}" class="img-fluid" style="max-height: 300px;" alt="Logo ConnecTerra">
+            <div class="logo-hero-container">
+                <img src="{% static 'images/connectTerra-logo-vertical.svg' %}" 
+                    class="img-fluid hero-logo" 
+                    alt="Logo ConnecTerra">
+            </div>
         </div>
+
         <div class="col-lg-4">
-            <h1 class="display-5 fw-extrabold text-primary text-uppercase">Pilar da Conexão Real</h1>
+            <h1 class="hero-text text-uppercase">
+                Pilar da Conexão Real
+            </h1>
         </div>
     </div>
 </section>
@@ -52,9 +62,45 @@
 </div>
 
 <style>
-    /* Efeito de hover que o Bootstrap não tem nativo */
-    .hover-up { transition: all 0.3s ease; }
-    .hover-up:hover { transform: translateY(-10px); shadow: 0 20px 40px rgba(0,0,0,0.1); }
-    .display-5 { font-weight: 800; color: #3498DB !important; letter-spacing: 1px; }
+.hero-text {
+        font-weight: 800;
+        color: #023047 !important;
+        /* Diminuímos o tamanho base para caber em uma linha */
+        font-size: calc(1rem + 0.4vw); 
+        letter-spacing: 0.5px;
+        line-height: 1;
+        margin: 0;
+        /* Garante que o texto não quebre em telas médias/grandes */
+        white-space: nowrap; 
+    }
+
+    .hero-logo {
+        max-height: 180px; /* Ajuste leve para equilibrar com o texto em uma linha */
+        width: auto;
+    }
+
+    /* Efeito de Hover nos Cards */
+    .hover-up { 
+        transition: all 0.3s ease; 
+    }
+    .hover-up:hover { 
+        transform: translateY(-10px); 
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; 
+    }
+
+    /* Botões Customizados baseados no seu estilo original */
+    .btn-custom {
+        background-color: #5bb75b;
+        color: white;
+        border-radius: 50px;
+        padding: 10px 30px;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+    .btn-custom:hover {
+        background-color: #4fa34f;
+        color: white;
+        transform: scale(1.05);
+    }
 </style>
 {% endblock %}
