@@ -643,34 +643,67 @@
                 </div>
 
                 <div class="certificates-list" id="certificatesList">
-                    <div class="empty-state"> Nenhuma certificação adicionada ainda. Clique no botão acima para adicionar</div>
-                </div>
-            </section>
-
+                    {% if produtor.certificate_upload %}
+                        <div class="certificate-item">
+                            <div class="certificate-icon">✓</div>
+                            <div class="certificate-info">
+                                <div class="certificate-name" style="color: #27ae60;">Arquivo único enviado e salvo</div>
+                                <div class="certificate-date">
+                                    <a href="{{ produtor.certificate_upload.url }}" target="_blank" style="color: #2196F3; font-weight: bold; text-decoration: underline;">
+                                        Clique aqui para visualizar o PDF atual
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
+                            * Para atualizar, basta adicionar um novo arquivo no botão acima e salvar.
+                        </p>
+                    {% else %}
+                        <div class="empty-state">Nenhuma certificação enviada ainda. Clique no botão acima para selecionar seu PDF único.</div>
+                    {% endif %}
+                </div> 
+            </section> 
+                
             <div class="illustration-section">
                 <img src="{% static 'images/fazendeiro-prancheta-sf.png' %}" width="600" height="600" alt="Fazendeiro"> 
-                <div class="submit-section">
+                <div class="submit-section" style="flex-direction: column; gap: 2rem;">
                     <button type="submit" class="submit-button">Salvar Informações</button>
+                    
+                    <div class="orientacoes" style="background: #f9f9f9; padding: 1.5rem; border-radius: 1rem; border-left: 5px solid #2196F3;">
+                        <h4 style="margin-bottom: 10px; color: #2C3E50;">Orientações de upload:</h4>
+                        <p style="font-size: 0.9rem; line-height: 1.6; color: #444;">
+                            [1] Um <strong>ÚNICO</strong> arquivo aceito (apenas PDF);<br>
+                            [2] Todos os comprovantes devem estar neste arquivo;<br>
+                            [3] Ao declarar selos, use a convenção: NOME 1, NOME 2... na ordem do PDF;<br>
+                            [4] Atualizações exigem o reenvio do arquivo completo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="certModal">
+                <div class="modal-content">
+                    <h3 class="modal-header">Adicionar Certificações</h3>
+                    <div class="form-group">
+                        <label for="cert_name" class="form-label">Nome das Certificações</label>
+                        <input type="text" id="cert_name" class="form-input" placeholder="Ex: Certificação Orgânica">
+                    </div>
+                    <div class="form-group">
+                        <label for="cert_file" class="form-label">Arquivo PDF</label>
+                        <input 
+                        type="file" 
+                        id="cert_file" 
+                        name="certificate_upload"
+                        class="form-input" 
+                        accept=".pdf">
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="modal-btn cancel" onclick="closeModal()">Cancelar</button>
+                        <button type="button" class="modal-btn confirm" onclick="addCertificate()">Adicionar</button>
+                    </div>
                 </div>
             </div>
         </form>
-         <div class="modal" id="certModal">
-            <div class="modal-content">
-                <h3 class="modal-header">Adicionar Certificação</h3>
-                <div class="form-group">
-                    <label for="cert_name" class="form-label">Nome da Certificação</label>
-                    <input type="text" id="cert_name" class="form-input" placeholder="Ex: Certificação Orgânica">
-                </div>
-                <div class="form-group">
-                    <label for="cert_file" class="form-label">Arquivo PDF</label>
-                    <input type="file" id="cert_file" class="form-input" accept=".pdf">
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="modal-btn cancel" onclick="closeModal()">Cancelar</button>
-                    <button type="button" class="modal-btn confirm" onclick="addCertificate()">Adicionar</button>
-                </div>
-            </div>
-        </div>
 
         <footer class="footer">
             <p class="footer-text">© Lorem Ipsum Ltda - 2026</p>
@@ -717,33 +750,39 @@
         function closeModal() {
             document.getElementById('certModal').classList.remove('active');
             document.getElementById('cert_name').value = '';
-            document.getElementById('cert_file').value = '';
         }
 
         // Adicionar certificação
         let certificates = [];
 
         function addCertificate() {
-            const name = document.getElementById('cert_name').value;
-            const file = document.getElementById('cert_file').files[0];
+            const fileInput = document.getElementById('cert_file');
+            const nameInput = document.getElementById('cert_name');
+            const list = document.getElementById('certificatesList');
 
-            if (!name || !file) {
-                alert('Por favor, preencha todos os campos!');
-                return;
+            if (fileInput.files.length > 0) {
+                const fileName = fileInput.files[0].name;
+                const certName = nameInput.value || "Certificações Declaradas";
+
+        
+                list.innerHTML = `
+                    <div class="certificate-item">
+                        <div class="certificate-icon">📄</div>
+                        <div class="certificate-info">
+                            <div class="certificate-name">${certName}</div>
+                            <div class="certificate-date">Pronto para envio: ${fileName}</div>
+                        </div>
+                    </div>
+                    <p style="color: #e67e22; font-size: 0.85rem; font-weight: bold; margin-top: 10px;">
+                        ⚠️ Clique no botão azul "SALVAR INFORMAÇÕES" abaixo para concluir o upload.
+                    </p>
+                `;
+                closeModal();
+            } else {
+                alert("Por favor, selecione um arquivo PDF.");
             }
-
-            const cert = {
-                id: Date.now(),
-                name: name,
-                fileName: file.name,
-                date: new Date().toLocaleDateString('pt-BR')
-            };
-
-            certificates.push(cert);
-            renderCertificates();
-            closeModal();
         }
-
+            
         function renderCertificates() {
             const list = document.getElementById('certificatesList');
             
