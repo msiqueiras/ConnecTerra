@@ -7,9 +7,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.decorators import login_required 
 
-def pagina_inicial(request):
-    return render(request, 'pagina_inicial.html')
-
 def catalogo(request):
     search = request.GET.get('search', '').strip()
     
