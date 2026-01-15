@@ -208,6 +208,14 @@
             text-transform: uppercase;
         }
 
+        .produtor-descricap {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2C3E50;
+            text-transform: uppercase;
+        }
+
+
         /* Footer */
         .footer {
             background-color: #5BC55C;
@@ -365,6 +373,7 @@
                 </div>
                 <p class="produtor-email">{{ produtor.email_adress }}</p>
                 <p class="produtor-location">{{ produtor.city }}, {{ produtor.state }}</p>
+                <p class="produtor-descricao">Produção de: {{ produtor.summary_prod}}</p>
             </div>
             {% endfor %}
 

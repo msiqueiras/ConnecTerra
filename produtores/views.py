@@ -24,7 +24,6 @@ def cadastro(request):
         confirmar_senha = request.POST.get('confirmar_senha')
         cpf = request.POST.get('cpf')
         nome_completo = request.POST.get('full_name')
-        logradouro = request.POST.get('adress')
         
         if senha != confirmar_senha:
             messages.error(request, 'As senhas não coincidem!')
@@ -64,6 +63,7 @@ def cadastro(request):
             employment_name=limpa('employment_name'),
             costume_name=limpa('costume_name'),
             cnpj=limpa('cnpj'),
+            summary_prod = request.POST.get('summary_prod', 'Não descrito')
         )
         
         messages.success(request, 'Cadastro realizado com sucesso! Faça login para continuar.')
@@ -102,7 +102,7 @@ def dashboard_produtor(request):
         
         novo_cnpj = request.POST.get('cnpj', '').strip()
         novo_telefone = request.POST.get('telefone', '').strip()
-        
+
         if not novo_cnpj:
             produtor.cnpj = None
         else:
@@ -126,6 +126,7 @@ def dashboard_produtor(request):
         produtor.adress = request.POST.get('logradouro')
         produtor.city = request.POST.get('cidade')
         produtor.state = request.POST.get('estado')
+        produtor.summary_prod = request.POST.get('descricao')
         
         #adição de infos de empresas
         produtor.employment_name = request.POST.get('nome_empresa', '')

@@ -308,23 +308,9 @@
     }
 
     /* Footer */
-    .footer {
-        background-color: #5BC55C;
-        padding: 1.5rem;
-        text-align: center;
-        border-radius: 1rem;
-        margin-top: 3rem;
-    }
-
-    .footer-text {
-        color: #2C3E50;
-        font-weight: 700;
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    /* Modal */
+     .footer { text-align: center; margin-top: 3rem; color: white; font-weight: 600; }
+    
+     /* Modal */
     .modal {
         display: none;
         position: fixed;
@@ -634,6 +620,19 @@
                 >
             </div>
 
+            <!-- Descrição de produção (EDITÁVEL) -->
+            <div class="form-group">
+                <label for="descricao" class="form-label">Descrição breve das produções</label>
+                <input
+                    type="text"
+                    id="descricao"
+                    name="descricao"
+                    class="form-input"
+                    placeholder="Hortaliças, tomates, café..."
+                    maxlength="500"
+                    value="{{ produtor.summary_prod }}"
+                >
+            </div>
             
             <!-- Certificações aqui -->
             <section class="certificate-section">
@@ -704,9 +703,9 @@
                 </div>
             </div>
         </form>
-
+        
         <footer class="footer">
-            <p class="footer-text">© Lorem Ipsum Ltda - 2026</p>
+            <p>© ConnecTerra - 2026</p>
         </footer>
     </div>
 

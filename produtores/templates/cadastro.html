@@ -95,7 +95,7 @@
             </a>
         </header>
 
-        <form method="POST" class="form-container">x
+        <form method="POST" class="form-container">
             {% csrf_token %}
 
             <div class="form-group">
@@ -150,8 +150,6 @@
                 <label for ="summary_prod" class="form-label">Descrição breve das produções</label>
                 <input type="text" id="summary_prod" name="summary_prod" class="form-input" placeholder="Hortaliças, tomates, café..." maxlength="500">
             </div>
-
-
 
             <div class="form-group">
                 <label for="email_adress" class="form-label">Email<span class="required">*</span></label>
