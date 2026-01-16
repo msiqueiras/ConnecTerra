@@ -176,16 +176,25 @@
 
         .certificacoes {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.6rem;
             align-items: center;
+            margin-left: 0.5rem;
         }
 
         .certificacao-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            padding: 4px;
+            transition: transform 0.2s;
+        }
+
+        .certificacao-icon:hover {
+            transform: scale(1.2); 
         }
 
         .certificacao-icon img {
@@ -215,24 +224,8 @@
             text-transform: uppercase;
         }
 
-
-        /* Footer */
-        .footer {
-            background-color: #5BC55C;
-            padding: 1.5rem;
-            text-align: center;
-            border-radius: 1rem;
-            margin-top: 2rem;
-        }
-
-        .footer-text {
-            color: #2C3E50;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
+        .footer { text-align: center; margin-top: 3rem; color: white; font-weight: 600; }
+        
         /* Responsive */
         @media (max-width: 768px) {
             body {
@@ -361,16 +354,22 @@
             
             {% for produtor in catalogo %}
             <div class="produtor-card" data-name="{{ produtor.nome|lower }}" data-location="{{ produtor.municipio }}, {{ produtor.estado }}" data-certificacoes="{{ produtor.certificacoes_list }}">
-                <div class="produtor-header">
+               <div class="produtor-header">
                     <h3 class="produtor-name">{{ produtor.nome_lgpd }}</h3>
                     <div class="certificacoes">
-                        {% for cert in produtor.certificacoes.all %}
-                        <div class="certificacao-icon">
-                            <img src="{% static cert.icone %}" alt="{{ cert.nome }}">
+                    {% for selo in produtor.selos.all %}
+                        <div class="certificacao-icon" title="Clique para ver mais detalhes do {{ selo.name }}">
+                            {% if selo.file_name_logo %}
+                                <a href="{{ selo.file_name_logo.url }}" target="blank">
+                                    <img src="{{ selo.file_name_logo.url }}" alt="{{ selo.name }}">
+                                </a>
+                            {% else %}
+                                <span style="font-size: 10px;">{{ selo.name }}</span>
+                            {% endif %}
                         </div>
-                        {% endfor %}
-                    </div>
+                    {% endfor %}
                 </div>
+            </div>
                 <p class="produtor-email">{{ produtor.email_adress }}</p>
                 <p class="produtor-location">{{ produtor.city }}, {{ produtor.state }}</p>
                 <p class="produtor-descricao">Produção de: {{ produtor.summary_prod}}</p>
@@ -381,8 +380,8 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p class="footer-text">
-                © Lorem Ipsum Ltda - 2026
+            <p>
+                © ConnecTerra - 2026
             </p>
         </footer>
     </div>

@@ -74,7 +74,6 @@ def cadastro(request):
 
 
 def login_produtor(request):
-    
     if request.method == 'POST':
         email = request.POST.get('email')
         senha = request.POST.get('senha')

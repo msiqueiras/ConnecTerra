@@ -1,8 +1,8 @@
 *.pyc
 *~
 __pycache__
-venv/
-.venv/
+# venv/
+# .venv/
 .pytest_cache/
 .mypy_cache/
 .vscode/ # Configurações de usuário do VS Code

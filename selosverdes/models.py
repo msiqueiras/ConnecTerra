@@ -7,7 +7,7 @@ class SelosVerdes(models.Model):
     issuing_body = models.CharField(max_length=200, blank=True, null=True, verbose_name='Órgão Emissor')
     description = models.TextField(verbose_name='Descrição do Selo')
     official_link = models.URLField(blank=True, null=True, verbose_name='Link Oficial')
-    file_name_logo = models.ImageField(upload_to='selosverdes/', blank=True, null=True, verbose_name='Logo do Selo (upload)')
+    file_name_logo = models.ImageField(upload_to='selosverdes/static/images', blank=True, null=True, verbose_name='Logo do Selo (upload)')
     slug = models.SlugField(max_length=150, unique=True, blank=True)
 
     def save(self, *args, **kwargs):

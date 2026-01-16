@@ -28,8 +28,20 @@
         }
 
         /* Header */
-        .header {
+.header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .logo {
@@ -37,10 +49,6 @@
             font-weight: 800;
             color: white;
             letter-spacing: -1px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
         }
 
         .logo-highlight {
@@ -56,6 +64,22 @@
             color: white;
         }
 
+        .logo-ct {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.7rem;
+            color: #2C3E50;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 0.5rem;
+        }
+        
         /* Cards Grid */
         .cards-grid {
             display: grid;
@@ -121,6 +145,8 @@
             text-transform: uppercase;
             margin-top: 1rem;
         }
+
+        .footer { text-align: center; margin-top: 3rem; color: white; font-weight: 600; }
 
         /* Responsive */
         @media (max-width: 1200px) {
@@ -206,7 +232,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <header class="header">
             <div class="header-left">
                 <h1 class="logo">
@@ -214,9 +239,9 @@
                 </h1>
                 <span class="page-title">Sobre a Plataforma</span>
             </div>
-            <a href="{% url 'pagina_inicial' %}">
-                <img src="{% static 'images/logo-ct-sf.png' %}" width='70' height='70' alt = 'Logo ConnecTerra'>
-            </a>
+        <a href="{% url 'pagina_inicial' %}">
+            <img src="{% static 'images/logo-ct-sf.png' %}" width='70' height='70' alt = 'Logo ConnecTerra'>
+        </a>
         </header>
 
         <!-- Cards Grid -->
@@ -273,6 +298,9 @@
                 </a>
             </div>
         </section>
+        <footer class="footer">
+            <p>© ConnecTerra - 2026</p>
+        </footer>
     </div>
 
     <script>
