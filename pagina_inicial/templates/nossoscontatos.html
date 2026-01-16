@@ -33,40 +33,74 @@
 
         <div class="col-lg-7">
             <div class="bg-light p-4 rounded-5">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-uppercase">Nome</label>
-                            <input type="text" class="form-control border-0 p-3 rounded-3" placeholder="Seu nome">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label small fw-bold text-uppercase">Assunto</label>
-                            <input type="text" class="form-control border-0 p-3 rounded-3" placeholder="Como podemos ajudar?">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label small fw-bold text-uppercase">Mensagem</label>
-                            <textarea class="form-control border-0 p-3 rounded-3" rows="4" placeholder="Escreva sua mensagem aqui..."></textarea>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-custom w-100 py-3">Enviar Mensagem</button>
-                        </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-uppercase">Nome</label>
+                        <input id="nome" type="text" class="form-control border-0 p-3 rounded-3" placeholder="Seu nome">
+                        <div class="invalid-feedback">Por favor, digite seu nome.</div>
                     </div>
-                </form>
+                    <div class="col-12">
+                        <label class="form-label small fw-bold text-uppercase">Assunto</label>
+                        <input id="assunto" type="text" class="form-control border-0 p-3 rounded-3" placeholder="Como podemos ajudar?">
+                        <div class="invalid-feedback">O assunto é obrigatório.</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-bold text-uppercase">Mensagem</label>
+                        <textarea id="mensagem" class="form-control border-0 p-3 rounded-3" rows="4" placeholder="Escreva sua mensagem aqui..."></textarea>
+                        <div class="invalid-feedback">Escreva uma mensagem antes de enviar.</div>
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="button" onclick="validarEEnviar()" class="btn btn-custom w-100 py-3">Enviar via E-mail</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<script>function validarEEnviar() {
+    const campos = ['nome', 'assunto', 'mensagem'];
+    let formulárioValido = true;
+
+    campos.forEach(id => {
+        const campo = document.getElementById(id);
+        if (!campo.value.trim()) {
+            campo.classList.add('is-invalid'); // Adiciona a borda vermelha do Bootstrap
+            formulárioValido = false;
+        } else {
+            campo.classList.remove('is-invalid'); // Remove se estiver preenchido
+        }
+    });
+
+    if (formulárioValido) {
+        const nome = document.getElementById('nome').value;
+        const assunto = document.getElementById('assunto').value;
+        const mensagem = document.getElementById('mensagem').value;
+
+        const emailDestino = "contatohenrique97@gmail.com";
+        const corpo = `Olá, meu nome é ${nome}.\n\n${mensagem}`;
+        
+        const mailtoLink = `mailto:${emailDestino}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+        window.location.href = mailtoLink;
+    }
+}
+</script>
+
 <style>
-    /* Estilos específicos para inputs nesta página */
-    .form-control:focus {
+.form-control:focus {
         box-shadow: 0 0 0 0.25rem rgba(91, 183, 91, 0.25);
         border: 1px solid #5bb75b;
     }
     
+    .form-control.is-invalid {
+        border: 2px solid #dc3545 !important;
+        background-color: #fff8f8;
+    }
+    .invalid-feedback {
+        font-weight: 600;
+        font-size: 0.75rem;
+    }
     .fw-extrabold { font-weight: 800; }
-    
     .bg-light { background-color: #f8f9fa !important; }
 </style>
 {% endblock %}
