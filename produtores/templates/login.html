@@ -1,116 +1,81 @@
-{% load static%}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
- <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConnecTerra - Login</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(180deg, #6FD666 0%, #4DB8A8 100%);
-        min-height: 100vh;
-        padding: 2rem 1rem;
-    }
-    .container { max-width: 1400px; margin: 0 auto; }
-    
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; gap: 1.5rem; }
-    .header-left { display: flex; align-items: center; gap: 1rem; }
-    .logo { font-size: 2.5rem; font-weight: 800; color: white; letter-spacing: -1px; text-decoration: none; }
-    .logo-highlight { background-color: white; color: #6FD666; padding: 0.25rem 1rem; border-radius: 0.5rem; }
-    .page-title { font-size: 2.5rem; font-weight: 300; color: white; }
+{% extends 'base.html' %}
+{% load static %}
 
-    .form-container {
-        background-color: white;
-        border-radius: 2rem;
-        padding: 3rem;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2.5rem;
-    }
+{% block content %}
+<section class="d-flex align-items-center justify-content-center" style="min-height: 60vh;">
+    <div class="card border-0 rounded-5 shadow-lg p-4 p-md-5" style="max-width: 500px; width: 100%; background-color: white;">
+        
+        <div class="text-center mb-4">
+            <h2 class="display-6 fw-extrabold text-uppercase" style="color: #4fa34f; letter-spacing: 1px;">
+                Login de produtor
+            </h2>
+            <div class="mx-auto mt-2" style="width: 50px; height: 4px; background-color: #5bb75b; border-radius: 10px;"></div>
+        </div>
 
-    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    .form-label { font-size: 0.95rem; font-weight: 700; color: #2C3E50; text-transform: uppercase; }
-    .required { color: #E74C3C; }
-    .form-input {
-        padding: 1rem 1.5rem;
-        border: 2px solid #E0E0E0;
-        border-radius: 2rem;
-        font-size: 1rem;
-        outline: none;
-        transition: 0.3s;
-    }
-    .form-input:focus { border-color: #6FD666; }
+        <form method="POST" id="loginForm" novalidate>
+            {% csrf_token %}
 
-    .info-button {
-        padding: 0.4rem 1rem;
-        background-color: #F5F5F5;
-        border-radius: 2rem;
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #7f8c8d;
-        text-transform: uppercase;
-        align-self: flex-start;
-    }
-
-    .illustration-section {
-        grid-column: 1 / -1;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 2rem;
-    }
-
-    .submit-button {
-        background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
-        color: white;
-        font-size: 1.1rem;
-        font-weight: 700;
-        padding: 1.25rem 4rem;
-        border: none;
-        border-radius: 3rem;
-        cursor: pointer;
-        box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
-    }
-
-    .footer { text-align: center; margin-top: 3rem; color: white; font-weight: 600; }
-</style>
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="header-left">
-                <a href="{% url 'pagina_inicial' %}" class="logo">
-                    Connec<span class="logo-highlight">Terra</span>
-                </a>
-                <span class="page-title">Login de produtor</span>
+            <div class="mb-3">
+                <label for="email" class="form-label small fw-bold text-uppercase text-dark">Email de login<span class="text-danger">*</span></label>
+                <input type="text" name="email" id="email" placeholder="Email" class="form-control border-0 bg-light p-3 rounded-3">
+                <div class="invalid-feedback fw-bold">O campo de e-mail é obrigatório.</div>
             </div>
-            <a href="{% url 'pagina_inicial' %}"> 
-                <img src="{% static 'images/logo-ct-sf.png' %}" width="70" height="70" alt='Logo'>
-            </a>
-        </header>
 
-    <form method="POST" class="form-container">
-        {% csrf_token %}
+            <div class="mb-4">
+                <label for="password" class="form-label small fw-bold text-uppercase text-dark">Senha de login<span class="text-danger">*</span></label>
+                <input type="password" name="senha" id="password" placeholder="Senha" class="form-control border-0 bg-light p-3 rounded-3">
+                <div class="invalid-feedback fw-bold">A senha é obrigatória.</div>
+            </div>
 
-        <div class="form-group">
-            <label for="email" class="form-label">Email de login<span class="required">*</span></label>
-            <input type="text" name="email" placeholder="Email" class="form-input" required>
-        </div>
+            <div class="text-center">
+                <button type="submit" onclick="validarAcesso(event)" class="btn btn-custom w-100 py-3 shadow">
+                    ENTRAR
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
 
-        <div class="form-group">
-            <label for="password" class="form-label">Senha de login<span class="required">*</span></label>
-            <input type="password" name="senha" placeholder="Senha" class="form-input" required>
-        </div>
+<script>
+function validarAcesso(event) {
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    let formValido = true;
 
-         <div class="submit-section">
-            <button type="submit" class="submit-button">Entrar</button>
-         </div>
-    </form>
+    if (!email.value.trim()) {
+        email.classList.add('is-invalid');
+        formValido = false;
+    } else {
+        email.classList.remove('is-invalid');
+    }
+
+    if (!password.value.trim()) {
+        password.classList.add('is-invalid');
+        formValido = false;
+    } else {
+        password.classList.remove('is-invalid');
+    }
+
+    if (!formValido) {
+        event.preventDefault();
+    }
+}
+</script>
+
+<style>
+    .fw-extrabold { font-weight: 800; }
     
-</html>
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(91, 183, 91, 0.25);
+        border: 1px solid #5bb75b;
+        background-color: #fff !important;
+    }
+
+    .form-control.is-invalid {
+        border: 2px solid #dc3545 !important;
+        background-color: #fff8f8 !important;
+    }
+
+    .bg-light { background-color: #f8f9fa !important; }
+</style>
+{% endblock %}

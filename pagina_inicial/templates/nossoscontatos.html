@@ -65,10 +65,10 @@
     campos.forEach(id => {
         const campo = document.getElementById(id);
         if (!campo.value.trim()) {
-            campo.classList.add('is-invalid'); // Adiciona a borda vermelha do Bootstrap
+            campo.classList.add('is-invalid'); 
             formulárioValido = false;
         } else {
-            campo.classList.remove('is-invalid'); // Remove se estiver preenchido
+            campo.classList.remove('is-invalid'); 
         }
     });
 
