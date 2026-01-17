@@ -1,4 +1,4 @@
-![Logo ConnecTerra](images/ct_banner.png)
+![Logo ConnecTerra](images/connectTerra-banner.png)
 # ConnecTerra - Sustentabilidade como pilar da conexão
 
 ## Contexto
