@@ -14,4 +14,4 @@ class ProdutorForm(forms.Form):
     state = forms.CharField(max_length=100, label='Estado*')
     phone_number = forms.CharField(max_length=20, label='Número de Telefone')
     certificate_upload = forms.FileField(label='Cópia do(s) Certificado(s)', required=False)
-    # selos = forms.ModelChoiceField(selos.objects.all())
+    summary_prod = forms.CharField(widget=forms.Textarea)

@@ -1,0 +1,410 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnecTerra - Catálogo de Produtores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #6FD666 0%, #4DB8A8 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .logo-highlight {
+            background-color: white;
+            color: #6FD666;
+            padding: 0.25rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: white;
+        }
+
+        .logo-ct {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.7rem;
+            color: #2C3E50;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        /* Search Bar */
+        .search-section {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1.25rem 3.5rem 1.25rem 3.5rem;
+            border: none;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #2C3E50;
+        }
+
+        .clear-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #2C3E50;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .clear-icon:hover {
+            color: #E74C3C;
+        }
+
+        /* Produtores List */
+        .produtores-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .produtor-card {
+            background-color: white;
+            border-radius: 2rem;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .produtor-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .produtor-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .produtor-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2C3E50;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .certificacoes {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            margin-left: 0.5rem;
+        }
+
+        .certificacao-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            padding: 4px;
+            transition: transform 0.2s;
+        }
+
+        .certificacao-icon:hover {
+            transform: scale(1.2); 
+        }
+
+        .certificacao-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .produtor-email {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2C3E50;
+            text-transform: uppercase;
+        }
+
+        .produtor-location {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2C3E50;
+            text-transform: uppercase;
+        }
+
+        .produtor-descricap {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2C3E50;
+            text-transform: uppercase;
+        }
+
+        .footer { text-align: center; margin-top: 3rem; color: white; font-weight: 600; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-left {
+                flex-direction: column;
+            }
+
+            .logo {
+                font-size: 1.75rem;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .logo-ct {
+                width: 60px;
+                height: 60px;
+                font-size: 0.6rem;
+            }
+
+            .search-bar {
+                font-size: 0.85rem;
+                padding: 1rem 3rem 1rem 3rem;
+            }
+
+            .produtor-card {
+                padding: 1.5rem;
+            }
+
+            .produtor-name {
+                font-size: 1.1rem;
+            }
+
+            .produtor-email,
+            .produtor-location {
+                font-size: 0.9rem;
+            }
+
+            .certificacao-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .footer-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .produtor-card {
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .produtor-card:nth-child(1) { animation-delay: 0.1s; }
+        .produtor-card:nth-child(2) { animation-delay: 0.2s; }
+        .produtor-card:nth-child(3) { animation-delay: 0.3s; }
+        .produtor-card:nth-child(4) { animation-delay: 0.4s; }
+        .produtor-card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="logo">
+                    Connec<span class="logo-highlight">Terra</span>
+                </h1>
+                <span class="page-title">Catálogo de produtores</span>
+            </div>
+            <a href="{% url 'pagina_inicial' %}">
+                <img src="{% static 'images/logo-ct-sf.png' %}" width='70' height='70' alt = 'Logo ConnecTerra'>
+            </a>
+        </header>
+
+
+        <section class="search-section">
+            <form method="GET" action="{% url 'catalogo' %}" class="search-container">
+                <span class="search-icon"></span>
+                 <input 
+                    type="text" 
+                    name="search"
+                    class="search-bar" 
+                    id="searchInput"
+                    placeholder="BUSCAR POR MUNICÍPIO..."
+                    value="{{ request.GET.search }}"
+                >
+                {% if request.GET.search %}
+                <a href="{% url 'catalogo' %}" class="clear-icon" title="Limpar busca">✖</a>
+                {% else %}
+                <button type="submit" class="clear-icon" style="background: none; border: none; cursor: pointer;">🔍</button>
+               {% endif %}
+            </form>
+        </section>
+        
+        <section class="produtores-list" id="produtoresList">
+            
+            {% for produtor in catalogo %}
+            <div class="produtor-card" data-name="{{ produtor.nome|lower }}" data-location="{{ produtor.municipio }}, {{ produtor.estado }}" data-certificacoes="{{ produtor.certificacoes_list }}">
+               <div class="produtor-header">
+                    <h3 class="produtor-name">{{ produtor.nome_lgpd }}</h3>
+                    <div class="certificacoes">
+                    {% for selo in produtor.selos.all %}
+                        <div class="certificacao-icon" title="Clique para ver mais detalhes do {{ selo.name }}">
+                            {% if selo.file_name_logo %}
+                                <a href="{{ selo.file_name_logo.url }}" target="blank">
+                                    <img src="{{ selo.file_name_logo.url }}" alt="{{ selo.name }}">
+                                </a>
+                            {% else %}
+                                <span style="font-size: 10px;">{{ selo.name }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+                <p class="produtor-email">{{ produtor.email_adress }}</p>
+                <p class="produtor-location">{{ produtor.city }}, {{ produtor.state }}</p>
+                <p class="produtor-descricao">Produção de: {{ produtor.summary_prod}}</p>
+            </div>
+            {% endfor %}
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                © ConnecTerra - 2026
+            </p>
+        </footer>
+    </div>
+
+    <script>
+    document.querySelector('.search-icon').addEventListener('click', function() {
+        document.getElementById('searchInput').focus();
+    });
+
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            this.closest('form').submit();
+        }
+    });
+
+    const produtorCards = document.querySelectorAll('.produtor-card');
+    produtorCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const name = this.querySelector('.produtor-name').textContent;
+            console.log('Clicou no produtor:', name);
+        
+        });
+    });
+    </script>
+</body>
+</html>

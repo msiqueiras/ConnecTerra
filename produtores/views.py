@@ -7,17 +7,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.decorators import login_required 
 
-def pagina_inicial(request):
-    return render(request, 'pagina_inicial.html')
-
-def produtoresrurais(request):
-    produtores = ProdutoresRurais.objects.all().order_by('full_name')
-    search = request.GET.get('search')
-    if search == None:
-        search = ''
-    produtores = ProdutoresRurais.objects.filter(city__icontains=search)
+def catalogo(request):
+    search = request.GET.get('search', '').strip()
     
-    return render(request,'catalago_produtores.html',{'produtores': produtores})
+    if search:
+        produtores = ProdutoresRurais.objects.filter(city__icontains=search).order_by('full_name')
+    else:
+        produtores = ProdutoresRurais.objects.all().order_by('full_name')
+    
+    return render(request, 'catalogo_produtores.html', {'catalogo': produtores})
 
 def cadastro(request):
     if request.method == 'POST':
@@ -52,7 +50,7 @@ def cadastro(request):
             valor = request.POST.get(campo)
             return valor if valor and valor.strip() else None
 
-        produtor = ProdutoresRurais.objects.create(
+        ProdutoresRurais.objects.create(
             user=user, 
             full_name=nome_completo,
             cpf=cpf,
@@ -65,6 +63,7 @@ def cadastro(request):
             employment_name=limpa('employment_name'),
             costume_name=limpa('costume_name'),
             cnpj=limpa('cnpj'),
+            summary_prod = request.POST.get('summary_prod', 'Não descrito')
         )
         
         messages.success(request, 'Cadastro realizado com sucesso! Faça login para continuar.')
@@ -75,7 +74,6 @@ def cadastro(request):
 
 
 def login_produtor(request):
-    
     if request.method == 'POST':
         email = request.POST.get('email')
         senha = request.POST.get('senha')
@@ -103,15 +101,15 @@ def dashboard_produtor(request):
         
         novo_cnpj = request.POST.get('cnpj', '').strip()
         novo_telefone = request.POST.get('telefone', '').strip()
-        
-        if not produtor.cnpj:
-            if novo_cnpj:
-                if ProdutoresRurais.objects.filter(cnpj=novo_cnpj).exists():
-                    messages.error(request, 'Este CNPJ já está cadastrado por outro produtor')
-                    return redirect('dashboard_produtor')
-                produtor.cnpj = novo_cnpj
-            elif not novo_cnpj:
-                produtor.cnpj= None
+
+        if not novo_cnpj:
+            produtor.cnpj = None
+        else:
+            if ProdutoresRurais.objects.filter(cnpj=novo_cnpj).exclude(id=produtor.id).exists():
+                messages.error(request, 'Este CNPJ já está cadastrado!')
+                return redirect('dashboard_produtor')
+            produtor.cnpj = novo_cnpj
+
 
         if novo_telefone != produtor.phone_number:
             if ProdutoresRurais.objects.filter(phone_number=novo_telefone).exists():
@@ -119,11 +117,15 @@ def dashboard_produtor(request):
                 return redirect('dashboard_produtor')
             produtor.phone_number = novo_telefone
         
+        if 'certificate_upload' in request.FILES:
+            produtor.certificate_upload = request.FILES['certificate_upload']
+
         #as infos pessoais q podem ser alteradas
         produtor.cep = request.POST.get('cep')
         produtor.adress = request.POST.get('logradouro')
         produtor.city = request.POST.get('cidade')
         produtor.state = request.POST.get('estado')
+        produtor.summary_prod = request.POST.get('descricao')
         
         #adição de infos de empresas
         produtor.employment_name = request.POST.get('nome_empresa', '')
@@ -131,7 +133,7 @@ def dashboard_produtor(request):
 
         produtor.save()
         
-        messages.success(request, 'Informações atualizadas com sucesso!')
+        messages.success(request, 'Informações e certificações atualizadas com sucesso!')
         return redirect('dashboard_produtor')
     
     context = {

@@ -10,7 +10,7 @@ class ProdutoresRurais(models.Model):
     cpf = models.CharField(max_length=20, unique=True, verbose_name = 'CPF')
     cnpj = models.CharField(max_length=20, unique=True, blank=True, null=True, verbose_name='CNPJ')
     email_adress = models.EmailField(unique=True, verbose_name='Endereço Eletrônico')
-    password = models.CharField(max_length=128)
+    # password = models.CharField(max_length=128)
     adress = models.CharField(verbose_name='Logradouro com número')
     cep = models.CharField(max_length=8, verbose_name='CEP')
     city = models.CharField(max_length=100, verbose_name='Município', default='Não informado')
@@ -34,6 +34,15 @@ class ProdutoresRurais(models.Model):
         blank=True,
         verbose_name='Selos Verdes'
         )
+    
+    summary_prod = models.TextField(max_length=500, verbose_name='Descrição breve do que é produzido', blank=True, null=True, default='Não descrito')
+
+    @property
+    def nome_lgpd(self):
+        nomes = self.full_name.split()
+        if len(nomes) > 1:
+            return f"{nomes[0]} {nomes[-1]}"
+        return self.full_name
 
     def __str__(self):
         return self.full_name

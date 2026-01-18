@@ -14,6 +14,7 @@ class ProdutoresRuraisAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'employment_name' ,'email_adress', 'phone_number', 'cep', 'format_selos', 'verificate')
     search_fields = ('full_name', 'email_adress', 'selo__name', 'employment_name')
     list_filter = ('verificate', 'selos')
+    filter_horizontal = ('selos',)
 
 
 admin.site.register(ProdutoresRurais, ProdutoresRuraisAdmin)
